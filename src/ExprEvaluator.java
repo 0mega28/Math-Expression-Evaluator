@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Optional;
 
 import ast.AST;
+import grammar.ExpressionGrammar;
 
 import static parser.ParserCombinators.*;
 import static parser.Parsers.*;
@@ -117,15 +118,4 @@ public class ExprEvaluator {
         numberTest();
         addExprTest();
     }
-}
-
-// ------------------------------------------------------------------------------------------------------------------------
-// -------------------------------------------EXPRESSION-GRAMMAR-----------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------------------
-interface ExpressionGrammar {
-    @SuppressWarnings("unchecked")
-    static Parser<AST.Num> number = oneOf(
-            floatParser().map(AST.Num.Float::new),
-            integerParser().map(AST.Num.Int::new));
-
 }
