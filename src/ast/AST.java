@@ -1,10 +1,11 @@
 package ast;
 
+import java.util.List;
+
+import parser.Pair;
+
 public interface AST {
-    /**
-     * 1 + 3 - 1 * 3 / 9
-     */
-    interface Num {
+    sealed interface Num {
         record Int(Long value) implements Num {
         }
 
@@ -12,15 +13,20 @@ public interface AST {
         }
     }
 
-    interface Term {
-
+    enum AddSub {
+        ADD, SUB
     }
 
-    interface Factor {
-        
+    enum MultDiv {
+        MULT, DIV
     }
 
-    interface Expr {
+    record Term(Factor factor, List<Pair<MultDiv, Factor>> rest) {
+    }
 
+    record Factor(AST.Num value) {
+    }
+
+    record Expr(Term term, List<Pair<AddSub, Term>> rest) {
     }
 }

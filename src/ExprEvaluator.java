@@ -110,8 +110,9 @@ public class ExprEvaluator {
 
     static void addExprTest() {
         String string = "1-2+3+4";
-        // System.out.println(string + ": " +
-        // ExpressionGrammar.expr.parse(string).get().value());
+        var ast = ExpressionGrammar.expr.parse(string).get().value();
+        System.out.println("AST: " + ast);
+        System.out.println("Value: " +eval.Eval.eval(ast));
     }
 
     static void expressionGrammarTest() {
