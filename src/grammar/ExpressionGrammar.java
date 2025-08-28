@@ -14,13 +14,18 @@ import parser.Parser;
 
 public interface ExpressionGrammar {
         @SuppressWarnings("unchecked")
-        final static Parser<Num> number = oneOf(
+        final static Parser<Num> _number = oneOf(
                         floatParser().map(Num.Float::new),
                         integerParser().map(Num.Int::new));
 
-        final static Parser<AST.Factor.SignedFactor> signedFactor = zip(
+        final static Parser<Num> number = first(_number, consumeSpace());
+
+        final static Parser<AST.Factor.SignedFactor> _signedFactor = zip(
                         ref(() -> ExpressionGrammar.addOrSub), ref(() -> ExpressionGrammar.factor))
                         .map(value -> new AST.Factor.SignedFactor(value.first(), value.second()));
+
+        final static Parser<AST.Factor.SignedFactor> signedFactor = first(_signedFactor, consumeSpace());
+
 
         @SuppressWarnings("unchecked")
         final static Parser<AST.Factor> factor = oneOf(
@@ -29,14 +34,18 @@ public interface ExpressionGrammar {
         );
 
         @SuppressWarnings("unchecked")
-        final static Parser<MultDiv> multOrDiv = oneOf(
+        final static Parser<MultDiv> _multOrDiv = oneOf(
                         consume("*").map(_ -> MultDiv.MULT),
                         consume("/").map(_ -> MultDiv.DIV));
 
+        final static Parser<MultDiv> multOrDiv = first(_multOrDiv, consumeSpace());
+
         @SuppressWarnings("unchecked")
-        final static Parser<AddSub> addOrSub = oneOf(
+        final static Parser<AddSub> _addOrSub = oneOf(
                         consume("+").map(_ -> AddSub.ADD),
                         consume("-").map(_ -> AddSub.SUB));
+
+        final static Parser<AddSub> addOrSub = first(_addOrSub, consumeSpace());
 
         // ------------------------------TERM------------------------------------------------------------------
         final static Parser<List<Pair<MultDiv, AST.Factor>>> restTerm = zip(multOrDiv, factor).zeroOrMore();
@@ -48,12 +57,16 @@ public interface ExpressionGrammar {
         // ------------------------------EXPR------------------------------------------------------------------
         final static Parser<List<Pair<AddSub, AST.Term>>> restExpr = zip(addOrSub, term).zeroOrMore();
 
-        final static Parser<AST.Expr> expr = zip(term, restExpr)
+        final static Parser<AST.Expr> _expr = zip(term, restExpr)
                         .map(value -> new AST.Expr(value.first(), value.second()));
+
+        final static Parser<AST.Expr> expr = second(consumeSpace(), first(_expr, consumeSpace()));
         // ----------------------------------------------------------------------------------------------------
 
         @SuppressWarnings("unchecked")
-        final static Parser<AST.Primary> primary = oneOf(
+        final static Parser<AST.Primary> _primary = oneOf(
                         number.map(AST.Primary.Num::new),
                         first(second(consume("("), expr), consume(")")).map(AST.Primary.Expr::new));
+
+        final static Parser<AST.Primary> primary = first(_primary, consumeSpace());
 }
