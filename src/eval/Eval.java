@@ -24,7 +24,13 @@ public interface Eval {
         var init = eval(term.factor());
 
         for (var rest: term.rest()) {
-            throw new UnsupportedOperationException();
+            AST.MultDiv multOrDiv = rest.first();
+            var value = eval(rest.second());
+
+            init = switch(multOrDiv) {
+                case AST.MultDiv.MULT -> init * value;
+                case AST.MultDiv.DIV -> init / value;
+            };
         }
 
         return init;
