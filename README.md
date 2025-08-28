@@ -36,6 +36,12 @@ src/
 
 ---
 
+## Example Expression 
+
+- `-1+((1-2)*3)+4.0/2` => `-2.0D`
+
+---
+
 ## 🔧 Building & Running
 ```bash
 java -ea ExprEvaluator.java
@@ -65,27 +71,11 @@ java -ea ExprEvaluator.java
 
 ---
 
-## 🚀 Extending the Project
-| What to add            | Where to change                          |
-|------------------------|------------------------------------------|
-| Multiplication/division evaluation | `eval.Eval::eval(AST.Term)` |
-| Parentheses handling   | Add rule to `ExpressionGrammar` & update AST |
-| Unary plus/minus       | Extend grammar and evaluator            |
-| CLI / REPL             | New class wrapping parser & evaluator   |
-| Unit tests             | Add JUnit tests under `src/test`        |
-
----
-
 ## 🗺️ Roadmap / TODO
-- [ ] Implement `MULT` / `DIV` evaluation and float maths  
-- [ ] Add parentheses and unary operator support  
+- [x] Implement `MULT` / `DIV` evaluation and float maths  
+- [x] Add parentheses and unary operator support  
 - [ ] Provide interactive REPL
 - [ ] Replace inline assertions with structured JUnit tests  
-
----
-
-## 📄 License
-Released under the MIT License – see [LICENSE](LICENSE) for details *(file not yet included).*
 
 ---
 
