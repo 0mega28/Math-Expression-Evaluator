@@ -112,7 +112,7 @@ public class ExprEvaluator {
         String string = "-1+((1-2)*3)+4.0/2";
         var ast = ExpressionGrammar.expr.parse(string).get().value();
         var value = eval.Eval.eval(ast);
-        assert value.equals(new Num.Float(-2.0D));
+        assert value.floatValue().equals(-2.0D);
     }
 
     static void expressionGrammarTest() {

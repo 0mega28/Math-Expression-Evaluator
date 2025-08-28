@@ -64,4 +64,18 @@ public sealed interface Num {
             };
         };
     }
+
+    default Double floatValue() {
+        return switch(this) {
+            case Int(var iValue) -> iValue.doubleValue();
+            case Float(var fValue) -> fValue;
+        };
+    }
+
+    default Long longValue() {
+        return switch(this) {
+            case Int(var iValue) -> iValue;
+            case Float(var fValue) -> fValue.longValue();
+        };
+    }
 }
