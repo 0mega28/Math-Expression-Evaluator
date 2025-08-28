@@ -2,18 +2,21 @@ package eval;
 
 import ast.AST;
 import ast.AST.Factor;
+import model.AddSub;
+import model.MultDiv;
+import model.Num;
 
 public interface Eval {
     static Long eval(AST.Expr expr) {
         var init = eval(expr.term());
 
         for (var rest: expr.rest()) {
-            AST.AddSub addOrSub = rest.first();
+            AddSub addOrSub = rest.first();
             var value = eval(rest.second());
             
             init = switch(addOrSub) {
-                case AST.AddSub.ADD -> init + value;
-                case AST.AddSub.SUB -> init - value;
+                case AddSub.ADD -> init + value;
+                case AddSub.SUB -> init - value;
             };
         }
 
@@ -24,12 +27,12 @@ public interface Eval {
         var init = eval(term.factor());
 
         for (var rest: term.rest()) {
-            AST.MultDiv multOrDiv = rest.first();
+            MultDiv multOrDiv = rest.first();
             var value = eval(rest.second());
 
             init = switch(multOrDiv) {
-                case AST.MultDiv.MULT -> init * value;
-                case AST.MultDiv.DIV -> init / value;
+                case MultDiv.MULT -> init * value;
+                case MultDiv.DIV -> init / value;
             };
         }
 
@@ -37,10 +40,10 @@ public interface Eval {
     }
 
     static Long eval(Factor factor) {
-        AST.Num value = factor.value();
+        Num value = factor.value();
         return switch(value) {
-            case AST.Num.Int(var i) -> i;
-            case AST.Num.Float(var _f) -> throw new UnsupportedOperationException();
+            case Num.Int(var i) -> i;
+            case Num.Float(var _f) -> throw new UnsupportedOperationException();
         };
     }
 }

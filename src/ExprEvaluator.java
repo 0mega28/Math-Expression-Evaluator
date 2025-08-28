@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import ast.AST;
 import grammar.ExpressionGrammar;
+import model.Num;
 
 import static parser.ParserCombinators.*;
 import static parser.Parsers.*;
@@ -102,10 +103,10 @@ public class ExprEvaluator {
     // ------------------------------------------------------------------------------------------------------------------------
     static void numberTest() {
         assert ExpressionGrammar.number.parse("111").equals(
-                Optional.of(new ParseResult<>(new AST.Num.Int(111L), "")));
+                Optional.of(new ParseResult<>(new Num.Int(111L), "")));
 
         assert ExpressionGrammar.number.parse("111.11a").equals(
-                Optional.of(new ParseResult<>(new AST.Num.Float(111.11D), "a")));
+                Optional.of(new ParseResult<>(new Num.Float(111.11D), "a")));
     }
 
     static void addExprTest() {
