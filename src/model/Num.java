@@ -2,9 +2,17 @@ package model;
 
 public sealed interface Num {
     record Int(Long value) implements Num {
+        @Override
+        public String toString() {
+            return value.toString();
+        }
     }
 
     record Float(Double value) implements Num {
+        @Override
+        public String toString() {
+            return value.toString();
+        }
     }
 
     default Num add(Num value) {
