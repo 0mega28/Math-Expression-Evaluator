@@ -80,6 +80,7 @@
 - [x] Implement `MULT` / `DIV` evaluation and float maths
 - [x] Add parentheses and unary operator support
 - [x] Provide interactive REPL
+- [ ] Handle Spaces 
 - [ ] Replace inline assertions with structured JUnit tests
 
 ---
