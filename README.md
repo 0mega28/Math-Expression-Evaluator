@@ -42,11 +42,13 @@
 ## 🔧 Building & Running
 - Running the tests
 ```sh
-   java -ea ExprEvaluator.java
+   java -ea src/ExprEvaluator.java
 ```
 - Running REPL
 ```sh
-   java ExprEvaluator.java -r
+   java src/ExprEvaluator.java -r
+   # or directly
+   ./src/ExprEvaluator.java -r
 ```
 
 ---
