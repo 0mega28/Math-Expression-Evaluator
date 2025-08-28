@@ -1,5 +1,5 @@
 # ExprEvaluator
-*A lightweight, self-contained expression parser & evaluator implemented in pure Java 17 using functional parser-combinator techniques.*
+*A lightweight, self-contained expression parser & evaluator implemented in pure Java using functional parser-combinator techniques.*
 
 ---
 
@@ -15,18 +15,15 @@
 
 ## 🗂️ Directory Layout
 ```
-src/
-  ast/        └─ AST.java        # Sealed interfaces & records representing the syntax tree
-  eval/       └─ Eval.java       # AST evaluation logic
-  grammar/    └─ ExpressionGrammar.java   # Grammar built via combinators
-  parser/     ├─ Parser.java
-              ├─ ParseResult.java
-              ├─ ParserCombinators.java
-              ├─ Parsers.java
-              ├─ Pair.java
-              └─ ParseFunction.java
-  test/       # (placeholder for future JUnit tests)
-  ExprEvaluator.java  # Demo entry-point executing assertions
+└── src
+    ├── ast                            # Sealed interfaces & records representing the syntax tree 
+    ├── eval                           # AST Evaluation Logic
+    ├── ExprEvaluator.java
+    ├── grammar                        # Grammar built via Parser combinator
+    ├── model
+    ├── parser                         # Fully Functional Parser Library from Scratch
+    ├── repl
+    └── test                           # placeholder
 ```
 
 ---
@@ -43,8 +40,13 @@ src/
 ---
 
 ## 🔧 Building & Running
-```bash
-java -ea ExprEvaluator.java
+- Running the tests
+```sh
+   java -ea ExprEvaluator.java
+```
+- Running REPL
+```sh
+   java ExprEvaluator.java -r
 ```
 
 ---
@@ -57,7 +59,8 @@ java -ea ExprEvaluator.java
 2. **Grammar Construction** (`ExpressionGrammar`)  
    ```
    number  → integer | float
-   factor  → number
+   primary → number | "(" expr ")"
+   factor  → "+" factor | "-" factor | primary
    term    → factor (('*'|'/') factor)*
    expr    → term   (('+'|'-') term)*
    ```
@@ -74,7 +77,7 @@ java -ea ExprEvaluator.java
 ## 🗺️ Roadmap / TODO
 - [x] Implement `MULT` / `DIV` evaluation and float maths  
 - [x] Add parentheses and unary operator support  
-- [ ] Provide interactive REPL
+- [x] Provide interactive REPL
 - [ ] Replace inline assertions with structured JUnit tests  
 
 ---
