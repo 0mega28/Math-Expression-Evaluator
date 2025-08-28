@@ -38,7 +38,6 @@ public interface Repl {
     static void repl() {
         Stream.generate(() -> console().readLine("expr> "))
                 .takeWhile(Predicate.not(Objects::isNull))
-                .filter(Predicate.not(Objects::isNull))
                 .map(String::trim)
                 .takeWhile(Predicate.not("quit"::equals))
                 .map(Repl::handleExpression)
