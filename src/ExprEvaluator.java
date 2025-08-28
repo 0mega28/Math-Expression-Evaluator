@@ -2,7 +2,6 @@
 import java.util.List;
 import java.util.Optional;
 
-import ast.AST;
 import grammar.ExpressionGrammar;
 import model.Num;
 
