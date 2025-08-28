@@ -109,9 +109,10 @@ public class ExprEvaluator {
     }
 
     static void exprTest() {
-        String string = "-1+((1-2)*3)+4/2";
+        String string = "-1+((1-2)*3)+4.0/2";
         var ast = ExpressionGrammar.expr.parse(string).get().value();
-        assert eval.Eval.eval(ast).equals(-2L);
+        var value = eval.Eval.eval(ast);
+        assert value.equals(new Num.Float(-2.0D));
     }
 
     static void expressionGrammarTest() {
