@@ -5,8 +5,9 @@ import ast.AST.Factor;
 import model.AddSub;
 import model.MultDiv;
 import model.Num;
+import static model.Num.BinaryOperator.*;
+import static model.Num.UnaryOperator.*;
 
-// TODO handle Num.Float
 public interface Eval {
     static Num eval(AST.Expr expr) {
         var result = eval(expr.term());
@@ -16,8 +17,8 @@ public interface Eval {
             var value = eval(rest.second());
 
             result = switch (addOrSub) {
-                case AddSub.ADD -> result.add(value);
-                case AddSub.SUB -> result.sub(value);
+                case AddSub.ADD -> add.apply(result, value);
+                case AddSub.SUB -> sub.apply(result, value);
             };
         }
 
@@ -32,8 +33,8 @@ public interface Eval {
             var value = eval(rest.second());
 
             result = switch (multOrDiv) {
-                case MultDiv.MULT -> result.mult(value);
-                case MultDiv.DIV -> result.div(value);
+                case MultDiv.MULT -> mult.apply(result, value);
+                case MultDiv.DIV -> div.apply(result, value);
             };
         }
 
@@ -44,7 +45,7 @@ public interface Eval {
         return switch (factor) {
             case AST.Factor.SignedFactor(AddSub sign, var _factor) -> switch (sign) {
                 case AddSub.ADD -> eval(_factor);
-                case AddSub.SUB -> eval(_factor).mult(new Num.Int(-1L));
+                case AddSub.SUB -> negate.apply(eval(_factor));
             };
             case Factor.Primary(var primary) -> eval(primary);
         };
